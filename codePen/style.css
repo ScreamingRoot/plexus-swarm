@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+}
+
+canvas {
+  background: rgb(13, 20, 36);
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+div {
+  background: rgb(29, 6, 6);
+  width: 25%;
+  height: 25%;
+}
