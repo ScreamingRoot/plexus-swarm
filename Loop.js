@@ -17,8 +17,6 @@ class Loop {
     this.deltaTime = 0;        // Разница во времени в миллисекундах
     this.lastTime = 0;       // Время последнего кадра
 
-    this.stepsCounter = 0;
-
     requestAnimationFrame(this.loop);
   }
 

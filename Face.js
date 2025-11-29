@@ -55,8 +55,7 @@ class Face {
 
     if ( alpha <= 0 )  return
 
-    // ctx.fillStyle = `hsla( ${ hue - 56 }, 100%, 50%, ${ alpha } )`
-    ctx.fillStyle = `hsla( ${ hue +120 }, 100%, 50%, ${ alpha } )`
+    ctx.fillStyle = `hsla( ${ hue + 120 }, 100%, 50%, ${ alpha } )`
 
     ctx.beginPath()
     ctx.moveTo( a.a.x, a.a.y )

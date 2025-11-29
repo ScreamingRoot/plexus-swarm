@@ -82,11 +82,6 @@ class Vert {
     ctx.arc( x, y, radius * this.alpha + 1, 0, 7 )
     ctx.fill()
 
-
-    // ctx.beginPath()
-    // ctx.arc( x, y, radius * 2 + 1, 0 + this.alphay, this.alphay + 7 * this.alpha )
-    // ctx.stroke()
-
   }
 
 }

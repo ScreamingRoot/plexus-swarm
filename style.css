@@ -1,12 +1,6 @@
 body {
 
-  /* background: black; */
-
   margin: 0;
-  /* padding: 0; */
-  
-  /* width: 100vw;
-  height: 100vh; */
 
 }
 
@@ -14,27 +8,7 @@ canvas {
 
   background: rgb(13, 20, 36);
   display: block;
-  
-  /* position: absolute;
-  top: 0;
-  left: 0; */
-
   width: 100vw;
   height: 100vh;
-
-}
-
-div {
-
-  background: rgb(29, 6, 6);
-
-  width: 50px;
-  height: 50px;
-  width: 25%;
-  height: 25%;
-  
-  /* position: absolute;
-  top: 25%;
-  left: 25%; */
 
 }

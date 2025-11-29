@@ -23,7 +23,6 @@ class Loop {
     this.maxDeltaMs = 50;
     this.deltaTime = 0;
     this.lastTime = 0;
-    this.stepsCounter = 0;
     requestAnimationFrame(this.loop);
   }
 
@@ -91,14 +90,14 @@ class Edge {
     this.max = 200
     let fa = w/(w+h) * this.max
     let fb = h/(w+h) * this.max
-    this.maxLenght = (Math.max(fa, fb) * Math.random() + Math.min(fa, fb) ) ** 2
+    this.maxLength = (Math.max(fa, fb) * Math.random() + Math.min(fa, fb) ) ** 2
   }
 
-  update( { a, b, maxLenght } = this ) {
+  update( { a, b, maxLength } = this ) {
     const sdx = ( a.x - b.x ) ** 2
     const sdy = ( a.y - b.y ) ** 2
     this.hue = ( a.hue + b.hue ) / 2
-    this.alpha = ( a.alpha + b.alpha ) / 2 - ( sdx + sdy ) / maxLenght
+    this.alpha = ( a.alpha + b.alpha ) / 2 - ( sdx + sdy ) / maxLength
 
     if ( this.alpha > 0 ) return
     this.alpha = 0
@@ -155,7 +154,11 @@ class Plexus {
   constructor( container ) {
     this.layer = new Layer( container )
     this.loop = new Loop( this.animate )
-    addEventListener( 'resize', () => this.setup() )
+    this.resizeTimer = null
+    addEventListener( 'resize', () => {
+      clearTimeout( this.resizeTimer )
+      this.resizeTimer = setTimeout( () => this.setup(), 500 )
+    } )
     this.setup()
   }
 
@@ -163,10 +166,6 @@ class Plexus {
     this.count = Math.floor( w * h  / 7000 * ( Math.hypot( w, h ) / ( w + h ) ))
     if ( this.count > 100 ) this.count = 100
     if ( this.count < 30  ) this.count = 30
-
-    console.log( `verts: ${ this.count }` )
-    console.log( `edges: ${ this.count * ( this.count - 1 ) / 2 }` )
-    console.log( `faces: ${ this.count * ( this.count - 1 ) * ( this.count - 2 ) / 6 }` )
 
     this.init()
   }
@@ -234,4 +233,4 @@ class Plexus {
   }
 }
 
-onload = () => new Plexus( document.querySelector('div') )
+onload = () => new Plexus( document.body )

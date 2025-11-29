@@ -26,9 +26,7 @@ class Edge {
     this.max = 200
     let fa = w/(w+h) * this.max
     let fb = h/(w+h) * this.max
-    this.maxLenght = (Math.max(fa, fb) * Math.random() + Math.min(fa, fb) ) ** 2
-    // this.maxLenght = Math.hypot( w, h ) / ( Math.random() * 4 + 2 ) / 2.5
-    // this.maxLenght = Math.hypot( w, h ) / ( Math.random() * 4 + 4 )
+    this.maxLength = (Math.max(fa, fb) * Math.random() + Math.min(fa, fb) ) ** 2
 
   }
 
@@ -37,15 +35,14 @@ class Edge {
    * @param {Object} [options=this] - Options for update
    * @param {Vert} options.a - First vertex
    * @param {Vert} options.b - Second vertex
-   * @param {number} options.maxLenght - Maximum edge length
+   * @param {number} options.maxLength - Maximum edge length
    */
-  update( { a, b, maxLenght } = this ) {
+  update( { a, b, maxLength } = this ) {
 
     const sdx = ( a.x - b.x ) ** 2
     const sdy = ( a.y - b.y ) ** 2
     this.hue = ( a.hue + b.hue ) / 2
-    this.alpha = ( a.alpha + b.alpha ) / 2 - ( sdx + sdy ) / maxLenght
-    // this.alpha = 1 - Math.hypot( a.x - b.x, a.y - b.y ) / maxLenght
+    this.alpha = ( a.alpha + b.alpha ) / 2 - ( sdx + sdy ) / maxLength
 
     if ( this.alpha > 0 ) return
     this.alpha = 0

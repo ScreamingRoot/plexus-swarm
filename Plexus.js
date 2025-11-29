@@ -12,7 +12,11 @@ class Plexus {
     this.layer = new Layer( container )
     this.loop = new Loop( this.animate )
 
-    addEventListener( 'resize', () => this.setup() )
+    this.resizeTimer = null
+    addEventListener( 'resize', () => {
+      clearTimeout( this.resizeTimer )
+      this.resizeTimer = setTimeout( () => this.setup(), 500 )
+    } )
     this.setup()
 
   }
@@ -25,17 +29,9 @@ class Plexus {
    */
   setup( { w, h } = this.layer ) {
 
-    // this.maxInterval = 40
-    // this.lastUpdate = 0
-    // this.deltaTime = 0
-
     this.count = Math.floor( w * h  / 7000 * ( Math.hypot( w, h ) / ( w + h ) ))
     if ( this.count > 100 ) this.count = 100
     if ( this.count < 30  ) this.count = 30
-
-    console.log( `verts: ${ this.count }` )
-    console.log( `edges: ${ this.count * ( this.count - 1 ) / 2 }` )
-    console.log( `faces: ${ this.count * ( this.count - 1 ) * ( this.count - 2 ) / 6 }` )
 
     this.init()
   }
@@ -44,7 +40,6 @@ class Plexus {
    * Initializes vertices, edges and faces
    */
   init() {
-
 
     this.createVerts()
     this.createEdges()
@@ -61,8 +56,6 @@ class Plexus {
     for ( let e of this.verts ) e.update(deltaTime)
     for ( let e of this.edges ) e.update()
     for ( let e of this.faces ) e.update()
-
-    // this.mouse.update()
 
   }
 
@@ -156,5 +149,4 @@ class Plexus {
   }
 }
 
-// onload = () => new Plexus(  )
-onload = () => new Plexus( document.querySelector('div') )
+onload = () => new Plexus( document.body )
