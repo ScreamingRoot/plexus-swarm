@@ -10,26 +10,10 @@ class Plexus {
   constructor( container ) {
 
     this.layer = new Layer( container )
-    this.mouse = new Mouse( container )
     this.loop = new Loop( this.animate )
 
     addEventListener( 'resize', () => this.setup() )
     this.setup()
-
-  }
-
-  /**
-   * Calculates approximate distance using optimized algorithm
-   * @param {number} dx - X distance
-   * @param {number} dy - Y distance
-   * @returns {number} Approximate distance
-   */
-  dist( dx, dy ) {
-
-    dx = Math.abs( dx )
-    dy = Math.abs( dy )
-
-    return dx < dy ? ( 123 * dy + 51 * dx ) / 128 | 0  : ( 123 * dx + 51 * dy ) / 128 | 0
 
   }
 
@@ -115,7 +99,7 @@ class Plexus {
     this.verts = []
 
     for ( let i = 0 ; i < this.count ; ++i ) {
-      const vert = new Vert( this.layer, this.mouse, this )
+      const vert = new Vert( this.layer )
       this.verts.push( vert )
 
     }

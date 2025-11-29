@@ -9,14 +9,12 @@ class Vert {
    * @param {CanvasRenderingContext2D} layer.ctx - Canvas context for rendering
    * @param {number} layer.w - Canvas width
    * @param {number} layer.h - Canvas height
-   * @param {Mouse} mouse - Mouse handler
    */
-  constructor( { ctx, w, h }, mouse ) {
+  constructor( { ctx, w, h } ) {
 
     this.ctx = ctx
     this.w = w
     this.h = h
-    this.mouse = mouse
 
     this.x = Math.random() * this.w
     this.y = Math.random() * this.h
@@ -26,26 +24,8 @@ class Vert {
     this.velx = 0
     this.vely = 0
 
-    // this.isCatched = false
-    // this.maxDist = 300
     this.radius = 1 + Math.random() * 2
     this.hue = 35
-    // this.hypot = this.dist( w, h )
-
-  }
-
-  /**
-   * Calculates approximate distance using optimized algorithm
-   * @param {number} dx - X distance
-   * @param {number} dy - Y distance
-   * @returns {number} Approximate distance
-   */
-  dist( dx, dy ) {
-
-    dx = Math.abs( dx )
-    dy = Math.abs( dy )
-
-    return dx < dy ? ( 123 * dy + 51 * dx ) / 128 | 0  : ( 123 * dx + 51 * dy ) / 128 | 0
 
   }
 
@@ -55,12 +35,11 @@ class Vert {
    * @param {Object} [options=this] - Options for update
    * @param {number} options.w - Canvas width
    * @param {number} options.h - Canvas height
-   * @param {Mouse} options.mouse - Mouse handler
    * @param {number} options.angle - Current angle
    * @param {number} options.x - Current x position
    * @param {number} options.y - Current y position
    */
-  update( deltaTime, { w, h, mouse, angle, x, y } = this ) {
+  update( deltaTime, { w, h, angle, x, y } = this ) {
 
     if ( x > w) { this.velx = ( this.velx - .1 ) % 3 }
     if ( x < 0) { this.velx = ( this.velx + .1 ) % 3 }

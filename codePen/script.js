@@ -17,59 +17,6 @@ class Layer {
   }
 }
 
-class Mouse {
-  constructor( container = document.body ) {
-    this.container = container
-    this.isPressed = false
-    this.isDown = false
-    this.isUp = false
-    this.x = 0
-    this.y = 0
-    this.delay = 60
-    this.timer = this.delay
-    this.isMove = false
-    this.isEmpty = true
-
-    container.addEventListener( `mouseleave`, event => this.changeState( event ) )
-    container.addEventListener( `mouseenter`, event => this.changeState( event ) )
-    container.addEventListener( `mousemove`,  event => this.changeState( event ) )
-    container.addEventListener( `mousedown`,  event => this.changeState( event ) )
-    container.addEventListener( `mouseup`,    event => this.changeState( event ) )
-  }
-
-  changeState( event ) {
-    const rect = this.container.getBoundingClientRect()
-    this.x = event.x - rect.left
-    this.y = event.y - rect.top
-
-    if ( event.type === 'mousemove' ) {
-      this.timer = this.delay
-      this.isMove = true
-    }
-
-    if ( event.type === 'mousedown' ) {
-      this.isPressed = true
-      this.isDown = true
-      this.isUp = false
-    } else if ( event.type === 'mouseup' || event.type === `mouseleave` ) {
-      this.isPressed = false
-      this.isDown = false
-      this.isUp = true
-    }
-  }
-
-  update() {
-    if ( this.timer <= 0 ) {
-      this.isEmpty = true
-      this.isMove = false
-    } else {
-      this.timer--
-    }
-    this.isDown = false
-    this.isUp = false
-  }
-}
-
 class Loop {
   constructor(updateCallback = (deltaTime) => {}) {
     this.updateCallback = updateCallback;
@@ -89,11 +36,10 @@ class Loop {
 }
 
 class Vert {
-  constructor( { ctx, w, h }, mouse ) {
+  constructor( { ctx, w, h } ) {
     this.ctx = ctx
     this.w = w
     this.h = h
-    this.mouse = mouse
     this.x = Math.random() * this.w
     this.y = Math.random() * this.h
     this.angle = Math.random() * Math.PI * 2
@@ -104,13 +50,7 @@ class Vert {
     this.hue = 35
   }
 
-  dist( dx, dy ) {
-    dx = Math.abs( dx )
-    dy = Math.abs( dy )
-    return dx < dy ? ( 123 * dy + 51 * dx ) / 128 | 0  : ( 123 * dx + 51 * dy ) / 128 | 0
-  }
-
-  update( deltaTime, { w, h, mouse, angle, x, y } = this ) {
+  update( deltaTime, { w, h, angle, x, y } = this ) {
     if ( x > w) { this.velx = ( this.velx - .1 ) % 3 }
     if ( x < 0) { this.velx = ( this.velx + .1 ) % 3 }
     if ( y > h) { this.vely = ( this.vely - .1 ) % 3 }
@@ -214,16 +154,9 @@ class Face {
 class Plexus {
   constructor( container ) {
     this.layer = new Layer( container )
-    this.mouse = new Mouse( container )
     this.loop = new Loop( this.animate )
     addEventListener( 'resize', () => this.setup() )
     this.setup()
-  }
-
-  dist( dx, dy ) {
-    dx = Math.abs( dx )
-    dy = Math.abs( dy )
-    return dx < dy ? ( 123 * dy + 51 * dx ) / 128 | 0  : ( 123 * dx + 51 * dy ) / 128 | 0
   }
 
   setup( { w, h } = this.layer ) {
@@ -265,7 +198,7 @@ class Plexus {
   createVerts( {w, h} = this.layer ) {
     this.verts = []
     for ( let i = 0 ; i < this.count ; ++i ) {
-      const vert = new Vert( this.layer, this.mouse, this )
+      const vert = new Vert( this.layer )
       this.verts.push( vert )
     }
   }
